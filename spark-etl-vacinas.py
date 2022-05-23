@@ -20,32 +20,25 @@ if __name__ == "__main__":
  
     # REMOVER COLUNAS DESNECESSÁRIAS 
     # DEIXAR APENAS AS COLUNAS QUE ESTÃO NA LISTA "colunas" 
-    colunas = [ 
-        "paciente_enumsexobiologico",  
-        "estabelecimento_municipio_nome", 
-        "estabelecimento_uf",   
-        "vacina_dataaplicacao",  
-        "dose",  
-        "vacina_nome" 
-    ] 
+  colunas = ["paciente_enumsexobiologico", "estabelecimento_municipio_nome", "estabelecimento_uf", "vacina_dataaplicacao", "dose", "vacina_nome" ] 
     vacinas = vacinas.select([column for column in vacinas.columns if column in colunas]) 
   
     # RENOMEAR COLUNAS 
-    vacinas = vacinas.withColumnRenamed("paciente_enumsexobiologico","sexo")
-                     .withColumnRenamed("estabelecimento_municipio_nome","municipio")
-                     .withColumnRenamed("estabelecimento_uf","uf") 
-                     .withColumnRenamed("vacina_dataaplicacao","data_aplicacao")
-                     .withColumnRenamed("vacina_nome","vacina") 
+   vacinas = vacinas.withColumnRenamed("paciente_enumsexobiologico","sexo")
+                    .withColumnRenamed("estabelecimento_municipio_nome","municipio")
+                    .withColumnRenamed("estabelecimento_uf","uf") 
+                    .withColumnRenamed("vacina_dataaplicacao","data_aplicacao")
+                    .withColumnRenamed("vacina_nome","vacina") 
  
     # AGRUPAR E CONTAR REGISTROS 
-    vacinas = vacinas.groupBy("sexo", "municipio","uf", "data_aplicacao", "vacina").count() 
-    vacinas = vacinas.withColumnRenamed("count","quantidade") 
+   vacinas = vacinas.groupBy("sexo", "municipio","uf", "data_aplicacao", "vacina").count() 
+   vacinas = vacinas.withColumnRenamed("count","quantidade") 
  
-    vacinas.printSchema() 
+   vacinas.printSchema() 
  
-    print(vacinas.head()) 
+   print(vacinas.head()) 
  
-    print("Quantidade de registros: " + str(vacinas.count())) 
+   print("Quantidade de registros: " + str(vacinas.count())) 
  
     # SALVAR NO S3 NO FORMATO PARQUET 
-    vacinas.write.mode("overwrite").parquet(sys.argv[2]) 
+   vacinas.write.mode("overwrite").parquet(sys.argv[2]) 
