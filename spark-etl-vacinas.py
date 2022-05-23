@@ -9,14 +9,10 @@ if __name__ == "__main__":
   spark = SparkSession.builder.appName("SparkETL").getOrCreate()
   
     # LER ARQUIVOS DO S3 ENVIADO COMO PARÃMETRO 
-    vacinas = spark.read
-                   .option("inferSchema", "true")
-                   .option("header", "true") 
-                   .option("sep",";")
-                   .csv(sys.argv[1])     
+  vacinas = spark.read.option("inferSchema", "true").option("header", "true").option("sep",";").csv(sys.argv[1])     
   
     # TRANSOFRMAÇÃO DA COLUNA DE DOSE DA VACINA 
-    vacinas = vacinas.withColumn( 
+  vacinas = vacinas.withColumn( 
         "dose", when(vacinas.vacina_descricao_dose.contains('1'), '1') 
         .when(vacinas.vacina_descricao_dose.contains('2'), '2') 
         .otherwise('Única') 
