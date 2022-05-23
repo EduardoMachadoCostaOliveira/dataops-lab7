@@ -3,20 +3,20 @@ from datetime import datetime
   
 from pyspark.sql import SparkSession 
 from pyspark.sql.functions import * 
-  
+
 if __name__ == "__main__": 
   
     # INICIAR SESSÃO SPARK 
-    spark = SparkSession\ 
-        .builder\ 
-        .appName("SparkETL")\ 
+    spark = SparkSession
+        .builder
+        .appName("SparkETL")
         .getOrCreate() 
   
     # LER ARQUIVOS DO S3 ENVIADO COMO PARÃMETRO 
-    vacinas = spark.read\ 
-                   .option("inferSchema", "true")\ 
-                   .option("header", "true")\ 
-                   .option("sep",";")\ 
+    vacinas = spark.read
+                   .option("inferSchema", "true")
+                   .option("header", "true") 
+                   .option("sep",";")
                    .csv(sys.argv[1])     
   
     # TRANSOFRMAÇÃO DA COLUNA DE DOSE DA VACINA 
@@ -39,10 +39,10 @@ if __name__ == "__main__":
     vacinas = vacinas.select([column for column in vacinas.columns if column in colunas]) 
   
     # RENOMEAR COLUNAS 
-    vacinas = vacinas.withColumnRenamed("paciente_enumsexobiologico","sexo")\ 
-                     .withColumnRenamed("estabelecimento_municipio_nome","municipio")\ 
-                     .withColumnRenamed("estabelecimento_uf","uf")\ 
-                     .withColumnRenamed("vacina_dataaplicacao","data_aplicacao")\ 
+    vacinas = vacinas.withColumnRenamed("paciente_enumsexobiologico","sexo")
+                     .withColumnRenamed("estabelecimento_municipio_nome","municipio")
+                     .withColumnRenamed("estabelecimento_uf","uf") 
+                     .withColumnRenamed("vacina_dataaplicacao","data_aplicacao")
                      .withColumnRenamed("vacina_nome","vacina") 
  
     # AGRUPAR E CONTAR REGISTROS 
