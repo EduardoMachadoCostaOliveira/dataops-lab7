@@ -6,10 +6,7 @@ from pyspark.sql.functions import *
 
 if __name__ == "__main__": 
   # INICIAR SESSÃO SPARK
-  spark = SparkSession
-    .builder
-    .appName("SparkETL")
-    .getOrCreate()
+  spark = SparkSession.builder.appName("SparkETL").getOrCreate()
   
     # LER ARQUIVOS DO S3 ENVIADO COMO PARÃMETRO 
     vacinas = spark.read
