@@ -10,7 +10,7 @@ if __name__ == "__main__":
     spark = SparkSession
         .builder
         .appName("SparkETL")
-        .getOrCreate() 
+        .getOrCreate()
   
     # LER ARQUIVOS DO S3 ENVIADO COMO PARÃMETRO 
     vacinas = spark.read
