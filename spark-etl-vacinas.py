@@ -24,10 +24,9 @@ if __name__ == "__main__":
   vacinas = vacinas.select([column for column in vacinas.columns if column in colunas]) 
   
     # RENOMEAR COLUNAS 
-  vacinas = vacinas.withColumnRenamed("paciente_enumsexobiologico","sexo")
-                    .withColumnRenamed("estabelecimento_municipio_nome","municipio")
-                    .withColumnRenamed("estabelecimento_uf","uf") 
-                    .withColumnRenamed("vacina_dataaplicacao","data_aplicacao")
+  vacinas = vacinas.withColumnRenamed("paciente_enumsexobiologico","sexo").withColumnRenamed("estabelecimento_municipio_nome","municipio")\
+                    .withColumnRenamed("estabelecimento_uf","uf")\ 
+                    .withColumnRenamed("vacina_dataaplicacao","data_aplicacao")\
                     .withColumnRenamed("vacina_nome","vacina") 
  
     # AGRUPAR E CONTAR REGISTROS 
